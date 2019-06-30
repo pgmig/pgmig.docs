@@ -1,37 +1,30 @@
-## Welcome to GitHub Pages
+## Translations
 
-You can use the [editor on GitHub](https://github.com/pgmig/pgmig.docs/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+This site is available in the following laguages:
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+* English
+* [Russian](/ru)
 
-### Markdown
+## Description
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+pgmig is a technology for doing postgresql database migrations, which include a way for definitions (DDL) and stored code development and loading.
 
-```markdown
-Syntax highlighted code block
+## Technical details
 
-# Header 1
-## Header 2
-### Header 3
+**TODO**
 
-- Bulleted
-- List
+## History
 
-1. Numbered
-2. List
+* First implementation of this technology was implemented in 2010 as part of [PgWS](https://github.com/LeKovr/pgws) project
+* Next generation was named [pomasql](https://github.com/pomasql)
+* This is a third generation
 
-**Bold** and _Italic_ and `Code` text
+## Authors
 
-[Link](url) and ![Image](src)
-```
+* **Aleksei Kovrizhkin** - *Initial work* - [LeKovr](https://github.com/LeKovr)
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+See also the list of [contributors](https://github.com/pomasql/poma/graphs/contributors) who participated in this project.
 
-### Jekyll Themes
+## License
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/pgmig/pgmig.docs/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+Sources of pgmig projects are licensed under the MIT License - see the [LICENSE.md](https://github.com/pgmig/pgmig/blob/master/LICENSE) file for details
