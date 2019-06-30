@@ -13,9 +13,9 @@ pgmig - это технология миграций СУБД postgresql, кот
 
 * [pgmig](https://github.com/pgmig/pgmig) - встраиваемая библиотека и утилита для миграции (golang)
 * [pgmig.perl](https://github.com/pgmig/pgmig.perl) - порт pgmig на perl
-* [pgmig-*](https://github.com/pgmig) - пакеты дополнительного функционала:
+* [pgmig-*](https://github.com/pgmig?q=pgmig-*) - пакеты дополнительного функционала:
   * [pkg] - управление пакетами и зависимостями
-  * [testing] - поддержка тестов
+  * [testing](https://github.com/pgmig/pgmig-testing) - поддержка тестов
   * [testing-xml] - поддержка тестов для функций, которые возвращают xml
   * [rpc] - реализация RPC для проекта [apisite]()
   * [enfist] - пример хранимого кода, проект [enfist]()
