@@ -27,4 +27,4 @@ See also the list of [contributors](https://github.com/pomasql/poma/graphs/contr
 
 ## License
 
-Sources of pgmig projects are licensed under the MIT License - see the [LICENSE.md](https://github.com/pgmig/pgmig/blob/master/LICENSE) file for details
+Sources of pgmig projects are licensed under the Apache 2.0 License - see the [LICENSE.md](https://github.com/pgmig/pgmig/blob/master/LICENSE) file for details

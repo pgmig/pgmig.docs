@@ -27,4 +27,4 @@ pgmig - это технология миграций СУБД postgresql, кот
 
 ## Лицензия
 
-Исходный код проектов pgmig публикуется под лицензией MIT - см файл [LICENSE.md](https://github.com/pgmig/pgmig/blob/master/LICENSE).
+Исходный код проектов pgmig публикуется под лицензией Apache 2.0 - см файл [LICENSE.md](https://github.com/pgmig/pgmig/blob/master/LICENSE).
