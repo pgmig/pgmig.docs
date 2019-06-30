@@ -1,3 +1,7 @@
+# pgmig
+
+Migrations (development & deployment) for postgresql applications.
+
 ## Translations
 
 This site is available in the following laguages:
