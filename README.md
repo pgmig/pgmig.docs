@@ -7,7 +7,7 @@ This site is available in the following laguages:
 
 ## Description
 
-pgmig is a technology for doing postgresql database migrations, which include a way for definitions (DDL) and stored code development and loading.
+pgmig is a technology for doing postgresql database migrations, which include a way for data definitions (DDL) and stored code development.
 
 ## Technical details
 
