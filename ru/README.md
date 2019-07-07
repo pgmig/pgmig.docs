@@ -50,6 +50,35 @@ pgmig - это технология миграций СУБД postgresql, кот
 1. Внешние ключи (некоторые справочники меняют только программисты, на них завязан код)
 2. Функции, которые возвращают значение по умолчанию (использующие их поля будут удалены вместе с этими функциями)
 
+Эти связи регистрируются в специальных таблицах, что позволяет удалять их вместе с пакетами
+
+### 3.2. Порядок работы
+
+Работа мигратора заключается в последовательном выполнении файлов, соответствующих маске, из заданных каталогов.
+Формат вызова:
+```
+  pgmig [options] create|build|test|drop|erase dir...
+```
+Для каждой команды используются файлы заданной маски и в порядке, приведенном в таблице:
+
+№ |Код|create|build|test|drop|erase|Описание
+---|-----------|:----:|:---:|:--:|:--:|:---:|--------
+00 | erase |:white_check_mark: |:white_check_mark: |:white_check_mark: |:white_check_mark: | :heavy_check_mark: | удаление защищенных объектов из других схем
+01 | drop |:white_check_mark: |:white_check_mark: |:white_check_mark: | :heavy_check_mark: | :heavy_check_mark: | удаление связей текущей схемы с другими схемами, удаление текущей схемы
+1x | init | :heavy_check_mark:|:white_check_mark: |:white_check_mark: |:white_check_mark: |:white_check_mark: | инициализация, создание схемы, зависимости от других пакетов
+2x | common_func | :heavy_check_mark:| :heavy_check_mark:|:white_check_mark: |:white_check_mark: | :white_check_mark:| функции, не имеющие зависимостей от объектов схемы
+3x | table (type) |:heavy_check_mark: | :white_check_mark:|:white_check_mark: |:white_check_mark: |:white_check_mark: | создание таблиц и типов
+4x | view (view_func) |:heavy_check_mark: |:heavy_check_mark: |:white_check_mark: | :white_check_mark:|:white_check_mark: | представления и функции для них
+5x | func |:heavy_check_mark: | :heavy_check_mark:| :white_check_mark:|:white_check_mark: |:white_check_mark: | основной код функций
+6x | trig_func |:heavy_check_mark: |:heavy_check_mark: | :white_check_mark:| :white_check_mark:| :white_check_mark:| код триггеров
+7x | trig |:heavy_check_mark: |:white_check_mark: | :white_check_mark:|:white_check_mark: |:white_check_mark: | создание триггеров
+8x | data | :heavy_check_mark:|:white_check_mark: |:white_check_mark: |:white_check_mark: |:white_check_mark: |наполнение таблиц
+9x | test | :heavy_check_mark:|:heavy_check_mark: |:heavy_check_mark: | :white_check_mark:| :white_check_mark:| тесты
+
+Дополнительно
+* `build` включает файлы `3*_once.sql` и `8*_once.sql`
+* `recreate` состоит из выполнения `drop`, `create` и в первом этапе пакеты идут в обратном порядке
+
 **Далее: В разработке**
 
 ## 4. История
