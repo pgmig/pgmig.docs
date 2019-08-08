@@ -57,27 +57,59 @@ pgmig - это технология миграций СУБД postgresql, кот
 Работа мигратора заключается в последовательном выполнении файлов, соответствующих маске, из заданных каталогов.
 Формат вызова:
 ```
-  pgmig [options] create|build|test|drop|erase dir...
+  pgmig [options] create|test|clean|drop|recreate dir...
 ```
-Для каждой команды используются файлы заданной маски и в порядке, приведенном в таблице:
+Для каждой команды задан список масок файлов:
 
-№ |Код|create|build|test|drop|erase|Описание
----|-----------|:----:|:---:|:--:|:--:|:---:|--------
-00 | erase |:white_check_mark: |:white_check_mark: |:white_check_mark: |:white_check_mark: | :heavy_check_mark: | удаление защищенных объектов из других схем
-01 | drop |:white_check_mark: |:white_check_mark: |:white_check_mark: | :heavy_check_mark: | :heavy_check_mark: | удаление связей текущей схемы с другими схемами, удаление текущей схемы
-1x | init | :heavy_check_mark:|:white_check_mark: |:white_check_mark: |:white_check_mark: |:white_check_mark: | инициализация, создание схемы, зависимости от других пакетов
-2x | common_func | :heavy_check_mark:| :heavy_check_mark:|:white_check_mark: |:white_check_mark: | :white_check_mark:| функции, не имеющие зависимостей от объектов схемы
-3x | table (type) |:heavy_check_mark: | :white_check_mark:|:white_check_mark: |:white_check_mark: |:white_check_mark: | создание таблиц и типов
-4x | view (view_func) |:heavy_check_mark: |:heavy_check_mark: |:white_check_mark: | :white_check_mark:|:white_check_mark: | представления и функции для них
-5x | func |:heavy_check_mark: | :heavy_check_mark:| :white_check_mark:|:white_check_mark: |:white_check_mark: | основной код функций
-6x | trig_func |:heavy_check_mark: |:heavy_check_mark: | :white_check_mark:| :white_check_mark:| :white_check_mark:| код триггеров
-7x | trig |:heavy_check_mark: |:white_check_mark: | :white_check_mark:|:white_check_mark: |:white_check_mark: | создание триггеров
-8x | data | :heavy_check_mark:|:white_check_mark: |:white_check_mark: |:white_check_mark: |:white_check_mark: |наполнение таблиц
-9x | test | :heavy_check_mark:|:heavy_check_mark: |:heavy_check_mark: | :white_check_mark:| :white_check_mark:| тесты
+Команда| Маски файлов| Назначение
+-------|------------ |--------
+create | `*.sql`, `!*.drop.sql`, `!*.clean.sql` | Создание схемы и объектов БД
+test   | `*.test.sql` | Тесты для выполнения в create и отдельно
+clean  | `*.clean.sql` | удаление связей текущей схемы с другими схемами, удаление текущей схемы
+drop   | `*.drop.sql`, `*.clean.sql` | удаление защищенных объектов из других схем
 
-Дополнительно
-* `build` включает файлы `3*_once.sql` и `8*_once.sql`
-* `recreate` состоит из выполнения `drop`, `create` и в первом этапе пакеты идут в обратном порядке
+Команда `recreate` представляет собой последовательное выполнение `clean`, `create`
+
+При выполнении `create` используются дополнительные группы файлов
+
+Группа | Маски файлов | Назначение
+-------|--------------|--------
+init   | `*.init.sql`  | не выполняется, если пакет был создан ранее (если нет таких файлов, не будет проверки вызовом pkg_exists)
+once   | `*.once.sql`   | файл не выполняется повторно, пока не выполнен drop (если нет таких файлов, не будет проверки вызовом file_exists)
+
+* test - может выполняться отдельно
+* clean - удаление пакета с сохранением персистентных данных
+* drop - удаление пакета и персистентных данных
+
+#### Сервисные функции SQL
+
+* `pkg_exists(pkg)` - проверка существования пакета в БД
+* `file_exists(pkg,file,csum)` - проверка загрузки файла и его контрольной суммы, регистрация файла в БД
+* `links_create(pkg)` - создание связей пакета с объектами оперативных данных
+* `links_clean(pkg)` - удаление связей пакета с объектами оперативных данных
+* `links_drop(pkg)` - удаление информации о связях пакета с объектами оперативных данных
+* `_c()` - создание комментария к объекту БД
+* `_assert_eq()` - проверка на совпадение значений
+
+Регистрация связей производится при выполнении create в файлах группы once.
+
+
+TODO: пакет в виде name:schema (две версии пакета в разных схемах)
+
+#### Пример разделения файлов по префиксу
+
+Префикс |Имя|Описание
+---|-----------|--------
+0x | init   | инициализация, создание схемы, зависимости от других пакетов
+1x | common | функции, не имеющие зависимостей от объектов схемы
+2x | table.init  | создание таблиц и типов
+3x | view  | представления и функции для них
+4x | func   | основной код функций
+5x | trig  | код триггеров
+6x | trig.init   | создание триггеров
+7x | data.init   |наполнение таблиц
+8x | clean  | удаление защищенных объектов из других схем
+9x | drop   | удаление связей текущей схемы с другими схемами, удаление текущей схемы
 
 **Далее: В разработке**
 
