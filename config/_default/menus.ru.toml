@@ -1,0 +1,12 @@
+[[main]]
+  identifier = "docs"
+  name = "Документация"
+  url = "docs"
+  weight = 2
+
+[[main]]
+  identifier = "archive"
+  name = "Архив"
+  url = "archive"
+  weight = 5
+

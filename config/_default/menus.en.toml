@@ -1,0 +1,12 @@
+[[main]]
+  identifier = "Docs"
+  name = "Documentation"
+  url = "docs"
+  weight = 1
+
+[[main]]
+  identifier = "archive"
+  name = "Archive"
+  url = "archive"
+  weight = 5
+

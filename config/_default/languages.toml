@@ -1,0 +1,14 @@
+[ru]
+  title = "PgMig"
+  languageName = "русский"
+  weight = 1
+  contentdir = "content/ru"
+  logoText = "PG мигратор"
+
+[en]
+  title = "PgMig"
+  languageName = "english"
+  weight = 2
+  contentdir = "content/en"
+  logoText = "PG migrator"
+

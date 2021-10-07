@@ -1,0 +1,26 @@
+---
+kind: pipeline
+type: docker
+name: app
+
+steps:
+
+- name: generate
+  image: klakegg/hugo:0.79.0-pandoc-ci
+  commands:
+  - hugo --minify
+
+- name: deploy_local
+  pull: never
+  image: ${DCAPE_COMPOSE}
+  commands:
+  - . setup config
+  - make .drone-default
+  volumes:
+  - name: dockersock
+    path: /var/run/docker.sock
+
+volumes:
+- name: dockersock
+  host:
+    path: /var/run/docker.sock

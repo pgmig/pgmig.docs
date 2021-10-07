@@ -1,0 +1,7 @@
+<ul>
+{{ range sort .Site.Pages "Permalink" }}
+<li> <a href="{{ .Permalink }}"> {{ .Name }}</a>
+{{ if .IsTranslated }} {{ range .Translations }} (<a href="{{ .Permalink }}">{{ .Lang }}</a>){{ end }}
+{{ end }}
+  {{ end }}
+</ul>
